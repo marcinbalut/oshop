@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FakeUserService } from 'src/services/user.service';
 
 @Component({
   selector: 'bs-navbar',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./bs-navbar.component.css']
 })
 export class BsNavbarComponent {
+
+  constructor(public userService: FakeUserService) {}
+
+  logout() {
+    this.userService.logout();
+  }
 
 }
