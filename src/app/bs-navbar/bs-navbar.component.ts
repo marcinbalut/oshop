@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FakeUserService } from 'src/services/user.service';
+import { FakeUserService } from 'src/services/fake-user.service';
 
 @Component({
   selector: 'bs-navbar',

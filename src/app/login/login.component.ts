@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FakeUserService } from 'src/services/user.service';
+import { FakeUserService } from 'src/services/fake-user.service';
 
 @Component({
   selector: 'login',
@@ -23,6 +23,5 @@ export class LoginComponent {
         this.router.navigate(['/']);
       }
     }
-
   }
 }

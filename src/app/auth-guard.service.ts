@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { FakeUserService } from 'src/services/user.service';
+import { FakeUserService } from 'src/services/fake-user.service';
 
 @Injectable({
   providedIn: 'root'
