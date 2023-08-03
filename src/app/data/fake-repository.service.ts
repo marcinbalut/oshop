@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class FakeRepository {
 
   constructor() {
-    if(localStorage.getItem('products') === null) {
+    if (localStorage.getItem('products') === null) {
       localStorage.setItem('products', JSON.stringify(this.products));
     }
   }
@@ -23,10 +23,10 @@ export class FakeRepository {
   ];
 
   private products: Product[] = [
-    { id: '1', title: 'Orange', price: 0.99, category: 'fruits', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg'},
-    { id: '2', title: 'Apple', price: 5.99, category: 'fruits', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg'},
-    { id: '3',  title: 'Freshly Baked Bread', price: 2.99, category: 'bread', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Fresh_made_bread_05.jpg'},
-    { id: '4', title: 'Milk', price: 1.99, category: 'dairy', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Glass_of_Milk_%2833657535532%29.jpg'}
+    { id: '1', title: 'Orange', price: 0.99, category: 'fruits', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg' },
+    { id: '2', title: 'Apple', price: 5.99, category: 'fruits', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg' },
+    { id: '3', title: 'Freshly Baked Bread', price: 2.99, category: 'bread', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Fresh_made_bread_05.jpg' },
+    { id: '4', title: 'Milk', price: 1.99, category: 'dairy', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Glass_of_Milk_%2833657535532%29.jpg' }
   ];
 
   getAllCategories(): Category[] {
@@ -34,20 +34,47 @@ export class FakeRepository {
   }
 
   getAllProducts(): Product[] {
-    return JSON.parse(localStorage.getItem('products'));  
+    return JSON.parse(localStorage.getItem('products'));
   }
 
   getProduct(id: string): Product {
     let prods = this.getAllProducts();
-    return prods.find( p => p.id === id);
+    return prods.find(p => p.id === id);
+  }
+
+  saveProduct(product: Product) {
+    let prods = this.getAllProducts();
+    if (prods.findIndex(p => p.id === product.id) === -1) {
+      this.createNewProduct(product);
+    } else {
+      this.updateProduct(product);
+    }
   }
 
   createNewProduct(product: Product) {
-    if(localStorage.getItem('products') !== null) {     
-          let prods = this.getAllProducts();
-          product.id = uuidv4();
-          prods.push(product);      
-          localStorage.setItem('products', JSON.stringify(prods));
+    if (localStorage.getItem('products') !== null) {
+      let prods = this.getAllProducts();
+      product.id = uuidv4();
+      prods.push(product);
+      localStorage.setItem('products', JSON.stringify(prods));
+    }
+  }
+
+  updateProduct(product: Product) {
+    let prods = this.getAllProducts();
+    let productIndex = prods.findIndex(p => p.id === product.id);
+    if (productIndex !== -1) {
+      prods.splice(productIndex, 1, product);
+      localStorage.setItem('products', JSON.stringify(prods));
+    }
+  }
+
+  deleteProduct(id: string) {
+    let prods = this.getAllProducts();
+    let productIndex = prods.findIndex(p => p.id === id);
+    if (productIndex !== -1) {
+      prods.splice(productIndex, 1);
+      localStorage.setItem('products', JSON.stringify(prods));
     }
   }
 }
