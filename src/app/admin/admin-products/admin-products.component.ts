@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FakeRepository } from 'src/app/data/fake-repository.service';
 
 @Component({
@@ -6,8 +6,12 @@ import { FakeRepository } from 'src/app/data/fake-repository.service';
   templateUrl: './admin-products.component.html',
   styleUrls: ['./admin-products.component.css']
 })
-export class AdminProductsComponent {
+export class AdminProductsComponent implements OnInit{
+  
   constructor(private repo: FakeRepository) {}
+  ngOnInit(): void {
+    this.repo.getAllProducts();
+  }
 
   get products() {
     return this.repo.getAllProducts();
