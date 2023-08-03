@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FakeUserService } from 'src/services/fake-user.service';
 
 @Component({
@@ -8,10 +9,11 @@ import { FakeUserService } from 'src/services/fake-user.service';
 })
 export class BsNavbarComponent {
 
-  constructor(public userService: FakeUserService) {}
+  constructor(private router: Router, public userService: FakeUserService) {}
 
   logout() {
     this.userService.logout();
+    this.router.navigate(['/']);
   }
 
 }
