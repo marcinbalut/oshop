@@ -11,14 +11,12 @@ import { Product } from 'src/app/data/models/product';
 })
 export class ProductFormComponent {
 
-  product: Product = { id: '', title: '', price: 0, category: '', imageUrl: '' };//'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png'};
+  product: Product = { id: '', title: '', price: 0, category: '', imageUrl: '' };
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private repo: FakeRepository) {
-
-
 
       let id = this.route.snapshot.paramMap.get('id');
       if(id) {
@@ -30,9 +28,17 @@ export class ProductFormComponent {
     return this.repo.getAllCategories();
   }
 
-  saveNewProduct(product: Product) {
-    this.repo.createNewProduct(product);
+  saveProduct(product: Product) {
+    product.id = this.product.id;
+    this.repo.saveProduct(product);
     this.router.navigate(['/admin/products']);
+  }
+  
+  deleteProduct() {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.repo.deleteProduct(this.product.id);
+      this.router.navigate(['/admin/products']);
+    }
   }
 
 }
